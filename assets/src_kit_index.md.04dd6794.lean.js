@@ -1,0 +1,1 @@
+import{_ as t,o as e,c as a,a as r}from"./app.2a154df8.js";const m=JSON.parse('{"title":"\u5DE5\u5177","description":"","frontmatter":{},"headers":[],"relativePath":"src/kit/index.md","lastUpdated":1697700742000}'),d={name:"src/kit/index.md"},s=r("",2),i=[s];function o(n,_,c,h,l,p){return e(),a("div",null,i)}var x=t(d,[["render",o]]);export{m as __pageData,x as default};

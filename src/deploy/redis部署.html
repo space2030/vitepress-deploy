@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis 部署</title>
+    <meta name="description" content="VitePress">
+    <link rel="stylesheet" href="/vitepress-deploy/assets/style.c6a8f29c.css">
+    <link rel="modulepreload" href="/vitepress-deploy/assets/app.2a154df8.js">
+    <link rel="modulepreload" href="/vitepress-deploy/assets/src_deploy_redis部署.md.ad57b569.lean.js">
+    
+    <link rel="icon" href="https://cn.vitejs.dev/logo-with-shadow.png">
+  <script>(()=>{const e=localStorage.getItem("vitepress-theme-appearance"),a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
+  </head>
+  <body>
+    <div id="app"><div class="Layout" data-v-581d5782><!--[--><!--]--><!--[--><span tabindex="-1" data-v-2c02b834></span><a href="#VPContent" class="VPSkipLink visually-hidden" data-v-2c02b834> Skip to content </a><!--]--><!----><header class="VPNav no-sidebar" data-v-581d5782 data-v-119e663c><div class="VPNavBar" data-v-119e663c data-v-1f7b674d><div class="container" data-v-1f7b674d><div class="VPNavBarTitle" data-v-1f7b674d data-v-ed531ba2><a class="title" href="/vitepress-deploy/" data-v-ed531ba2><!--[--><img class="VPImage logo" src="https://cn.vitejs.dev/logo-with-shadow.png" data-v-81172f9c><!--]--><!--[-->首页<!--]--></a></div><div class="content" data-v-1f7b674d><!----><nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu" data-v-1f7b674d data-v-192c109a><span id="main-nav-aria-label" class="visually-hidden" data-v-192c109a>Main Navigation</span><!--[--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/vitepress-deploy/src/view/index.html" data-v-192c109a data-v-4d31877c data-v-8dd034e6><!--[-->问答<!--]--><!----></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/vitepress-deploy/src/web/index.html" data-v-192c109a data-v-4d31877c data-v-8dd034e6><!--[-->前端<!--]--><!----></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/vitepress-deploy/src/deploy/index.html" data-v-192c109a data-v-4d31877c data-v-8dd034e6><!--[-->部署<!--]--><!----></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/vitepress-deploy/src/kit/index.html" data-v-192c109a data-v-4d31877c data-v-8dd034e6><!--[-->工具<!--]--><!----></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/vitepress-deploy/src/case/index.html" data-v-192c109a data-v-4d31877c data-v-8dd034e6><!--[-->案例<!--]--><!----></a><!--]--><!--]--></nav><!----><div class="VPNavBarAppearance appearance" data-v-1f7b674d data-v-5cf7609e><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" aria-label="toggle dark mode" data-v-5cf7609e data-v-766c3cb1 data-v-d6dfd774><span class="check" data-v-d6dfd774><span class="icon" data-v-d6dfd774><!--[--><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="sun" data-v-766c3cb1><path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path><path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path><path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path><path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path><path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path><path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path><path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path><path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path><path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="moon" data-v-766c3cb1><path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path></svg><!--]--></span></span></button></div><div class="VPSocialLinks VPNavBarSocialLinks social-links" data-v-1f7b674d data-v-a767cbbe data-v-e03f590e><!--[--><a class="VPSocialLink" href="https://github.com/space2030?tab=repositories" title="github" target="_blank" rel="noopener noreferrer" data-v-e03f590e data-v-3dd9970c><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="icon" data-v-3dd9970c><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg><span class="visually-hidden" data-v-3dd9970c>github</span></a><!--]--></div><div class="VPFlyout VPNavBarExtra extra" data-v-1f7b674d data-v-6a32f7d6 data-v-44cec2e6><button type="button" class="button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation" data-v-44cec2e6><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="icon" data-v-44cec2e6><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="5" cy="12" r="2"></circle></svg></button><div class="menu" data-v-44cec2e6><div class="VPMenu" data-v-44cec2e6 data-v-ddb22576><!----><!--[--><!--[--><!----><div class="group" data-v-6a32f7d6><div class="item appearance" data-v-6a32f7d6><p class="label" data-v-6a32f7d6>Appearance</p><div class="appearance-action" data-v-6a32f7d6><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" aria-label="toggle dark mode" data-v-6a32f7d6 data-v-766c3cb1 data-v-d6dfd774><span class="check" data-v-d6dfd774><span class="icon" data-v-d6dfd774><!--[--><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="sun" data-v-766c3cb1><path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path><path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path><path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path><path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path><path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path><path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path><path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path><path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path><path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="moon" data-v-766c3cb1><path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path></svg><!--]--></span></span></button></div></div></div><div class="group" data-v-6a32f7d6><div class="item social-links" data-v-6a32f7d6><div class="VPSocialLinks social-links-list" data-v-6a32f7d6 data-v-e03f590e><!--[--><a class="VPSocialLink" href="https://github.com/space2030?tab=repositories" title="github" target="_blank" rel="noopener noreferrer" data-v-e03f590e data-v-3dd9970c><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewbox="0 0 24 24" class="icon" data-v-3dd9970c><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg><span class="visually-hidden" data-v-3dd9970c>github</span></a><!--]--></div></div></div><!--]--><!--]--></div></div></div><button type="button" class="VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen" data-v-1f7b674d data-v-3524c702><span class="container" data-v-3524c702><span class="top" data-v-3524c702></span><span class="middle" data-v-3524c702></span><span class="bottom" data-v-3524c702></span></span></button></div></div></div><!----></header><!----><!----><div class="VPContent" id="VPContent" data-v-581d5782 data-v-804f35da><div class="VPDoc" data-v-804f35da data-v-3886f8ec><div class="container" data-v-3886f8ec><div class="aside" data-v-3886f8ec><div class="aside-curtain" data-v-3886f8ec></div><div class="aside-container" data-v-3886f8ec><div class="aside-content" data-v-3886f8ec><div class="VPDocAside" data-v-3886f8ec data-v-a4f49d12><!--[--><!--]--><!--[--><!--]--><div class="VPDocAsideOutline has-outline" data-v-a4f49d12 data-v-2d325df8><div class="content" data-v-2d325df8><div class="outline-marker" data-v-2d325df8></div><div class="outline-title" data-v-2d325df8>目录</div><nav aria-labelledby="doc-outline-aria-label" data-v-2d325df8><span class="visually-hidden" id="doc-outline-aria-label" data-v-2d325df8> Table of Contents for current page </span><ul class="root" data-v-2d325df8><!--[--><li style="" data-v-2d325df8><a class="outline-link" href="#_01-redis-windows" data-v-2d325df8>01 redis windows</a><!----></li><li style="" data-v-2d325df8><a class="outline-link" href="#_02-redis-镜像" data-v-2d325df8>02  redis 镜像</a><!----></li><li style="" data-v-2d325df8><a class="outline-link" href="#_03-redis-conf" data-v-2d325df8>03 redis conf</a><!----></li><li style="" data-v-2d325df8><a class="outline-link" href="#_04-redis-容器" data-v-2d325df8>04 redis 容器</a><!----></li><li style="" data-v-2d325df8><a class="outline-link" href="#_05-redis-yum" data-v-2d325df8>05 redis yum</a><!----></li><li style="" data-v-2d325df8><a class="outline-link" href="#参考-1" data-v-2d325df8>参考</a><!----></li><!--]--></ul></nav></div></div><!--[--><!--]--><div class="spacer" data-v-a4f49d12></div><!--[--><!--]--><!----><!--[--><!--]--><!--[--><!--]--></div></div></div></div><div class="content" data-v-3886f8ec><div class="content-container" data-v-3886f8ec><!--[--><!--]--><main class="main" data-v-3886f8ec><div style="position:relative;" class="vp-doc _vitepress-deploy_src_deploy_redis%E9%83%A8%E7%BD%B2" data-v-3886f8ec><div><h1 id="redis-部署" tabindex="-1">redis 部署 <a class="header-anchor" href="#redis-部署" aria-hidden="true">#</a></h1><h2 id="_01-redis-windows" tabindex="-1">01 redis windows <a class="header-anchor" href="#_01-redis-windows" aria-hidden="true">#</a></h2><h3 id="参考" tabindex="-1">参考 <a class="header-anchor" href="#参考" aria-hidden="true">#</a></h3><p><a href="https://www.jb51.net/article/218746.htm" target="_blank" rel="noopener noreferrer">Windows下安装Redis的流程详解</a></p><h3 id="下载" tabindex="-1">下载 <a class="header-anchor" href="#下载" aria-hidden="true">#</a></h3><p><a href="https://github.com/microsoftarchive/redis/releases" target="_blank" rel="noopener noreferrer">https://github.com/microsoftarchive/redis/releases</a></p><blockquote><p>版本：win-3.2.100 Redis-x64-3.2.100</p></blockquote><h3 id="配置" tabindex="-1">配置 <a class="header-anchor" href="#配置" aria-hidden="true">#</a></h3><p>Redis-x64-3.2.100下redis.windows.conf</p><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#8B949E;"># 设置密码</span></span>
+<span class="line"><span style="color:#8B949E;"># requirepass foobared</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9;">requirepass root</span></span>
+<span class="line"></span></code></pre></div><h3 id="启动" tabindex="-1">启动 <a class="header-anchor" href="#启动" aria-hidden="true">#</a></h3><ul><li>启动redis-server</li></ul><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#C9D1D9;">:: 进入D盘</span></span>
+<span class="line"><span style="color:#C9D1D9;">d:</span></span>
+<span class="line"><span style="color:#C9D1D9;">:: 进入redis目录</span></span>
+<span class="line"><span style="color:#79C0FF;">cd</span><span style="color:#C9D1D9;">  D:</span><span style="color:#79C0FF;">\s</span><span style="color:#C9D1D9;">oft</span><span style="color:#79C0FF;">\r</span><span style="color:#C9D1D9;">edis\</span></span>
+<span class="line"><span style="color:#C9D1D9;">:: 启动服务</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-server.exe redis.windows.conf</span></span>
+<span class="line"></span></code></pre></div><ul><li>启动redis-cli</li></ul><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#C9D1D9;">:: 进入D盘</span></span>
+<span class="line"><span style="color:#C9D1D9;">d:</span></span>
+<span class="line"><span style="color:#C9D1D9;">::进入redis目录</span></span>
+<span class="line"><span style="color:#79C0FF;">cd</span><span style="color:#C9D1D9;">  D:</span><span style="color:#79C0FF;">\s</span><span style="color:#C9D1D9;">oft</span><span style="color:#79C0FF;">\r</span><span style="color:#C9D1D9;">edis\</span></span>
+<span class="line"><span style="color:#C9D1D9;">:: 启动服务</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-cli.exe -h 127.0.0.1 -p 6379 -a root</span></span>
+<span class="line"></span></code></pre></div><h2 id="_02-redis-镜像" tabindex="-1">02 redis 镜像 <a class="header-anchor" href="#_02-redis-镜像" aria-hidden="true">#</a></h2><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#8B949E;">#下载最新版Redis镜像(其实此命令就等同于 : docker pull redis:latest )</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker pull redis</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#下载指定版本的Redis镜像 (xxx指具体版本号)</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker pull redis:xxx</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#检查当前所有Docker下载的镜像</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker images</span></span>
+<span class="line"></span></code></pre></div><ul><li><strong>redis 配置文件</strong></li></ul><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#8B949E;"># 1. 启动前需要先创建Redis外部挂载的配置文件（ /mydata/redis/conf/redis.conf ），</span></span>
+<span class="line"><span style="color:#8B949E;"># 2. Redis本身容器只存在 /etc/redis 目录 , 本身就不创建 redis.conf 文件。</span></span>
+<span class="line"><span style="color:#8B949E;"># 3. 当服务器和容器都不存在 redis.conf 文件时, 执行启动命令的时候 docker 会将 redis.conf 作为目录创建。</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#创建目录</span></span>
+<span class="line"><span style="color:#C9D1D9;">mkdir -p /mydata/redis/conf</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#创建文件</span></span>
+<span class="line"><span style="color:#C9D1D9;">touch /mydata/redis/conf/redis.conf</span></span>
+<span class="line"></span></code></pre></div><h2 id="_03-redis-conf" tabindex="-1">03 redis conf <a class="header-anchor" href="#_03-redis-conf" aria-hidden="true">#</a></h2><div class="language-text"><span class="copy"></span><pre><code><span class="line"><span style="color:#c9d1d9;">#redis.conf</span></span>
+<span class="line"><span style="color:#c9d1d9;"># Redis configuration file example.</span></span>
+<span class="line"><span style="color:#c9d1d9;"># ./redis-server /path/to/redis.conf</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################## INCLUDES ###################################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#这在你有标准配置模板但是每个redis服务器又需要个性设置的时候很有用。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># include /path/to/local.conf</span></span>
+<span class="line"><span style="color:#c9d1d9;"># include /path/to/other.conf</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################ GENERAL #####################################</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#是否在后台执行，yes：后台运行；no：不是后台运行（老版本默认）</span></span>
+<span class="line"><span style="color:#c9d1d9;"># daemonize yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">  #3.2里的参数，是否开启保护模式，默认开启。要是配置里没有指定bind和密码。开启该参数后，redis只会本地进行访问，拒绝外部访问。要是开启了密码   和bind，可以开启。否   则最好关闭，设置为no。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#   protected-mode yes</span></span>
+<span class="line"><span style="color:#c9d1d9;">#redis的进程文件</span></span>
+<span class="line"><span style="color:#c9d1d9;"># pidfile /var/run/redis/redis-server.pid</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#redis监听的端口号。</span></span>
+<span class="line"><span style="color:#c9d1d9;">port 6379</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#此参数确定了TCP连接中已完成队列(完成三次握手之后)的长度， 当然此值必须不大于Linux系统定义的/proc/sys/net/core/somaxconn值，默认是511，而Linux的默认参数值是128。当系统并发量大并且客户端速度缓慢的时候，可以将这二个参数一起参考设定。该内核参数默认值一般是128，对于负载很大的服务程序来说大大的不够。一般会将它修改为2048或者更大。在/etc/sysctl.conf中添加:net.core.somaxconn = 2048，然后在终端中执行sysctl -p。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># tcp-backlog 511</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#指定 redis 只接收来自于该 IP 地址的请求，如果不进行设置，那么将处理所有请求</span></span>
+<span class="line"><span style="color:#c9d1d9;"># bind 127.0.0.1</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#配置unix socket来让redis支持监听本地连接。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># unixsocket /var/run/redis/redis.sock</span></span>
+<span class="line"><span style="color:#c9d1d9;">#配置unix socket使用文件的权限</span></span>
+<span class="line"><span style="color:#c9d1d9;"># unixsocketperm 700</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;"># 此参数为设置客户端空闲超过timeout，服务端会断开连接，为0则服务端不会主动断开连接，不能小于0。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># timeout 0</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#tcp keepalive参数。如果设置不为0，就使用配置tcp的SO_KEEPALIVE值，使用keepalive有两个好处:检测挂掉的对端。降低中间设备出问题而导致网络看似连接却已经与对端端口的问题。在Linux内核中，设置了keepalive，redis会定时给对端发送ack。检测到对端关闭需要两倍的设置值。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># tcp-keepalive 0</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#指定了服务端日志的级别。级别包括：debug（很多信息，方便开发、测试），verbose（许多有用的信息，但是没有debug级别信息多），notice（适当的日志级别，适合生产环境），warn（只有非常重要的信息）</span></span>
+<span class="line"><span style="color:#c9d1d9;"># loglevel notice</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#指定了记录日志的文件。空字符串的话，日志会打印到标准输出设备。后台运行的redis标准输出是/dev/null。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># logfile /var/log/redis/redis-server.log</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#是否打开记录syslog功能</span></span>
+<span class="line"><span style="color:#c9d1d9;"># syslog-enabled no</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#syslog的标识符。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># syslog-ident redis</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#日志的来源、设备</span></span>
+<span class="line"><span style="color:#c9d1d9;"># syslog-facility local0</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#数据库的数量，默认使用的数据库是DB 0。可以通过”SELECT “命令选择一个db</span></span>
+<span class="line"><span style="color:#c9d1d9;">databases 16</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################ SNAPSHOTTING ################################</span></span>
+<span class="line"><span style="color:#c9d1d9;"># 快照配置</span></span>
+<span class="line"><span style="color:#c9d1d9;"># 注释掉“save”这一行配置项就可以让保存数据库功能失效</span></span>
+<span class="line"><span style="color:#c9d1d9;"># 设置sedis进行数据库镜像的频率。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># 900秒（15分钟）内至少1个key值改变（则进行数据库保存--持久化） </span></span>
+<span class="line"><span style="color:#c9d1d9;"># 300秒（5分钟）内至少10个key值改变（则进行数据库保存--持久化） </span></span>
+<span class="line"><span style="color:#c9d1d9;"># 60秒（1分钟）内至少10000个key值改变（则进行数据库保存--持久化）</span></span>
+<span class="line"><span style="color:#c9d1d9;"># save 900 1</span></span>
+<span class="line"><span style="color:#c9d1d9;"># save 300 10</span></span>
+<span class="line"><span style="color:#c9d1d9;"># save 60 10000</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#当RDB持久化出现错误后，是否依然进行继续进行工作，yes：不能进行工作，no：可以继续进行工作，可以通过info中的rdb_last_bgsave_status了解RDB持久化是否有错误</span></span>
+<span class="line"><span style="color:#c9d1d9;"># stop-writes-on-bgsave-error yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#使用压缩rdb文件，rdb文件压缩使用LZF压缩算法，yes：压缩，但是需要一些cpu的消耗。no：不压缩，需要更多的磁盘空间</span></span>
+<span class="line"><span style="color:#c9d1d9;"># rdbcompression yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#是否校验rdb文件。从rdb格式的第五个版本开始，在rdb文件的末尾会带上CRC64的校验和。这跟有利于文件的容错性，但是在保存rdb文件的时候，会有大概10%的性能损耗，所以如果你追求高性能，可以关闭该配置。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># rdbchecksum yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#rdb文件的名称</span></span>
+<span class="line"><span style="color:#c9d1d9;"># dbfilename dump.rdb</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#数据目录，数据库的写入会在这个目录。rdb、aof文件也会写在这个目录</span></span>
+<span class="line"><span style="color:#c9d1d9;"># dir /var/lib/redis</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################# REPLICATION #################################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#复制选项，slave复制对应的master。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># slaveof &lt;masterip&gt; &lt;masterport&gt;</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#如果master设置了requirepass，那么slave要连上master，需要有master的密码才行。masterauth就是用来配置master的密码，这样可以在连上master后进行认证。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># masterauth &lt;master-password&gt;</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#当从库同主机失去连接或者复制正在进行，从机库有两种运行方式：1) 如果slave-serve-stale-data设置为yes(默认设置)，从库会继续响应客户端的请求。2) 如果slave-serve-stale-data设置为no，除去INFO和SLAVOF命令之外的任何请求都会返回一个错误”SYNC with master in progress”。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># slave-serve-stale-data yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#作为从服务器，默认情况下是只读的（yes），可以修改成NO，用于写（不建议）。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># slave-read-only yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#是否使用socket方式复制数据。目前redis复制提供两种方式，disk和socket。如果新的slave连上来或者重连的slave无法部分同步，就会执行全量同步，master会生成rdb文件。有2种方式：disk方式是master创建一个新的进程把rdb文件保存到磁盘，再把磁盘上的rdb文件传递给slave。socket是master创建一个新的进程，直接把rdb文件以socket的方式发给slave。disk方式的时候，当一个rdb保存的过程中，多个slave都能共享这个rdb文件。socket的方式就的一个个slave顺序复制。在磁盘速度缓慢，网速快的情况下推荐用socket方式。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-diskless-sync no</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#diskless复制的延迟时间，防止设置为0。一旦复制开始，节点不会再接收新slave的复制请求直到下一个rdb传输。所以最好等待一段时间，等更多的slave连上来。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-diskless-sync-delay 5</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#slave根据指定的时间间隔向服务器发送ping请求。时间间隔可以通过 repl_ping_slave_period 来设置，默认10秒。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-ping-slave-period 10</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#复制连接超时时间。master和slave都有超时时间的设置。master检测到slave上次发送的时间超过repl-timeout，即认为slave离线，清除该slave信息。slave检测到上次和master交互的时间超过repl-timeout，则认为master离线。需要注意的是repl-timeout需要设置一个比repl-ping-slave-period更大的值，不然会经常检测到超时。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-timeout 60</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#是否禁止复制tcp链接的tcp nodelay参数，可传递yes或者no。默认是no，即使用tcp nodelay。如果master设置了yes来禁止tcp nodelay设置，在把数据复制给slave的时候，会减少包的数量和更小的网络带宽。但是这也可能带来数据的延迟。默认我们推荐更小的延迟，但是在数据量传输很大的场景下，建议选择yes。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-disable-tcp-nodelay no</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#复制缓冲区大小，这是一个环形复制缓冲区，用来保存最新复制的命令。这样在slave离线的时候，不需要完全复制master的数据，如果可以执行部分同步，只需要把缓冲区的部分数据复制给slave，就能恢复正常复制状态。缓冲区的大小越大，slave离线的时间可以更长，复制缓冲区只有在有slave连接的时候才分配内存。没有slave的一段时间，内存会被释放出来，默认1m。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-backlog-size 5mb</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#master没有slave一段时间会释放复制缓冲区的内存，repl-backlog-ttl用来设置该时间长度。单位为秒。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># repl-backlog-ttl 3600</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#当master不可用，Sentinel会根据slave的优先级选举一个master。最低的优先级的slave，当选master。而配置成0，永远不会被选举。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># slave-priority 100</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#redis提供了可以让master停止写入的方式，如果配置了min-slaves-to-write，健康的slave的个数小于N，mater就禁止写入。master最少得有多少个健康的slave存活才能执行写命令。这个配置虽然不能保证N个slave都一定能接收到master的写操作，但是能避免没有足够健康的slave的时候，master不能写入来避免数据丢失。设置为0是关闭该功能。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># min-slaves-to-write 3</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#延迟小于min-slaves-max-lag秒的slave才认为是健康的slave。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># min-slaves-max-lag 10</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;"># 设置1或另一个设置为0禁用这个特性。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># Setting one or the other to 0 disables the feature.</span></span>
+<span class="line"><span style="color:#c9d1d9;"># By default min-slaves-to-write is set to 0 (feature disabled) and</span></span>
+<span class="line"><span style="color:#c9d1d9;"># min-slaves-max-lag is set to 10.</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################## SECURITY ###################################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#requirepass配置可以让用户使用AUTH命令来认证密码，才能使用其他命令。这让redis可以使用在不受信任的网络中。为了保持向后的兼容性，可以注释该命令，因为大部分用户也不需要认证。使用requirepass的时候需要注意，因为redis太快了，每秒可以认证15w次密码，简单的密码很容易被攻破，所以最好使用一个更复杂的密码。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># requirepass foobared</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#把危险的命令给修改成其他名称。比如CONFIG命令可以重命名为一个很难被猜到的命令，这样用户不能使用，而内部工具还能接着使用。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#设置成一个空的值，可以禁止一个命令</span></span>
+<span class="line"><span style="color:#c9d1d9;"># rename-command CONFIG &quot;&quot;</span></span>
+<span class="line"><span style="color:#c9d1d9;">################################### LIMITS ####################################</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;"># 设置能连上redis的最大客户端连接数量。默认是10000个客户端连接。由于redis不区分连接是客户端连接还是内部打开文件或者和slave连接等，所以maxclients最小建议设置到32。如果超过了maxclients，redis会给新的连接发送’max number of clients reached’，并关闭连接。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># maxclients 10000</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#redis配置的最大内存容量。当内存满了，需要配合maxmemory-policy策略进行处理。注意slave的输出缓冲区是不计算在maxmemory内的。所以为了防止主机内存使用完，建议设置的maxmemory需要更小一些。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># maxmemory &lt;bytes&gt;</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#内存容量超过maxmemory后的处理策略。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#volatile-lru：利用LRU算法移除设置过过期时间的key。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#volatile-random：随机移除设置过过期时间的key。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#volatile-ttl：移除即将过期的key，根据最近过期时间来删除（辅以TTL）</span></span>
+<span class="line"><span style="color:#c9d1d9;">#allkeys-lru：利用LRU算法移除任何key。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#allkeys-random：随机移除任何key。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#noeviction：不移除任何key，只是返回一个写错误。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#上面的这些驱逐策略，如果redis没有合适的key驱逐，对于写命令，还是会返回错误。redis将不再接收写请求，只接收get请求。写命令包括：set setnx setex append incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby getset mset msetnx exec sort。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># maxmemory-policy noeviction</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#lru检测的样本数。使用lru或者ttl淘汰算法，从需要淘汰的列表中随机选择sample个key，选出闲置时间最长的key移除。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># maxmemory-samples 5</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">############################## APPEND ONLY MODE ###############################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#默认redis使用的是rdb方式持久化，这种方式在许多应用中已经足够用了。但是redis如果中途宕机，会导致可能有几分钟的数据丢失，根据save来策略进行持久化，Append Only File是另一种持久化方式，可以提供更好的持久化特性。Redis会把每次写入的数据在接收后都写入 appendonly.aof 文件，每次启动时Redis都会先把这个文件的数据读入内存里，先忽略RDB文件。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># appendonly no</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#aof文件名</span></span>
+<span class="line"><span style="color:#c9d1d9;"># appendfilename &quot;appendonly.aof&quot;</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#aof持久化策略的配置</span></span>
+<span class="line"><span style="color:#c9d1d9;">#no表示不执行fsync，由操作系统保证数据同步到磁盘，速度最快。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#always表示每次写入都执行fsync，以保证数据同步到磁盘。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#everysec表示每秒执行一次fsync，可能会导致丢失这1s数据。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># appendfsync everysec</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;"># 在aof重写或者写入rdb文件的时候，会执行大量IO，此时对于everysec和always的aof模式来说，执行fsync会造成阻塞过长时间，no-appendfsync-on-rewrite字段设置为默认设置为no。如果对延迟要求很高的应用，这个字段可以设置为yes，否则还是设置为no，这样对持久化特性来说这是更安全的选择。设置为yes表示rewrite期间对新写操作不fsync,暂时存在内存中,等rewrite完成后再写入，默认为no，建议yes。Linux的默认fsync策略是30秒。可能丢失30秒数据。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># no-appendfsync-on-rewrite no</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#aof自动重写配置。当目前aof文件大小超过上一次重写的aof文件大小的百分之多少进行重写，即当aof文件增长到一定大小的时候Redis能够调用bgrewriteaof对日志文件进行重写。当前AOF文件大小是上次日志重写得到AOF文件大小的二倍（设置为100）时，自动启动新的日志重写过程。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># auto-aof-rewrite-percentage 100</span></span>
+<span class="line"><span style="color:#c9d1d9;">#设置允许重写的最小aof文件大小，避免了达到约定百分比但尺寸仍然很小的情况还要重写</span></span>
+<span class="line"><span style="color:#c9d1d9;"># auto-aof-rewrite-min-size 64mb</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#aof文件可能在尾部是不完整的，当redis启动的时候，aof文件的数据被载入内存。重启可能发生在redis所在的主机操作系统宕机后，尤其在ext4文件系统没有加上data=ordered选项（redis宕机或者异常终止不会造成尾部不完整现象。）出现这种现象，可以选择让redis退出，或者导入尽可能多的数据。如果选择的是yes，当截断的aof文件被导入的时候，会自动发布一个log给客户端然后load。如果是no，用户必须手动redis-check-aof修复AOF文件才可以。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># aof-load-truncated yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################ LUA SCRIPTING ###############################</span></span>
+<span class="line"><span style="color:#c9d1d9;"># 如果达到最大时间限制（毫秒），redis会记个log，然后返回error。当一个脚本超过了最大时限。只有SCRIPT KILL和SHUTDOWN NOSAVE可以用。第一个可以杀没有调write命令的东西。要是已经调用了write，只能用第二个命令杀。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># lua-time-limit 5000</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################ REDIS CLUSTER ###############################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#集群开关，默认是不开启集群模式。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># cluster-enabled yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#集群配置文件的名称，每个节点都有一个集群相关的配置文件，持久化保存集群的信息。这个文件并不需要手动配置，这个配置文件有Redis生成并更新，每个Redis集群节点需要一个单独的配置文件，请确保与实例运行的系统中配置文件名称不冲突</span></span>
+<span class="line"><span style="color:#c9d1d9;"># cluster-config-file nodes-6379.conf</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#节点互连超时的阀值。集群节点超时毫秒数</span></span>
+<span class="line"><span style="color:#c9d1d9;"># cluster-node-timeout 15000</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#在进行故障转移的时候，全部slave都会请求申请为master，但是有些slave可能与master断开连接一段时间了，导致数据过于陈旧，这样的slave不应该被提升为master。该参数就是用来判断slave节点与master断线的时间是否过长。判断方法是：</span></span>
+<span class="line"><span style="color:#c9d1d9;">#比较slave断开连接的时间和(node-timeout * slave-validity-factor) + repl-ping-slave-period</span></span>
+<span class="line"><span style="color:#c9d1d9;">#如果节点超时时间为三十秒, 并且slave-validity-factor为10,假设默认的repl-ping-slave-period是10秒，即如果超过310秒slave将不会尝试进行故障转移 </span></span>
+<span class="line"><span style="color:#c9d1d9;"># cluster-slave-validity-factor 10</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#master的slave数量大于该值，slave才能迁移到其他孤立master上，如这个参数若被设为2，那么只有当一个主节点拥有2 个可工作的从节点时，它的一个从节点会尝试迁移。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># cluster-migration-barrier 1</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#默认情况下，集群全部的slot有节点负责，集群状态才为ok，才能提供服务。设置为no，可以在slot没有全部分配的时候提供服务。不建议打开该配置，这样会造成分区的时候，小分区的master一直在接受写请求，而造成很长时间数据不一致。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># cluster-require-full-coverage yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################## SLOW LOG ###################################</span></span>
+<span class="line"><span style="color:#c9d1d9;">###slog log是用来记录redis运行中执行比较慢的命令耗时。当命令的执行超过了指定时间，就记录在slow log中，slog log保存在内存中，所以没有IO操作。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#执行时间比slowlog-log-slower-than大的请求记录到slowlog里面，单位是微秒，所以1000000就是1秒。注意，负数时间会禁用慢查询日志，而0则会强制记录所有命令。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># slowlog-log-slower-than 10000</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#慢查询日志长度。当一个新的命令被写进日志的时候，最老的那个记录会被删掉。这个长度没有限制。只要有足够的内存就行。你可以通过 SLOWLOG RESET 来释放内存。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># slowlog-max-len 128</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">################################ LATENCY MONITOR ##############################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#延迟监控功能是用来监控redis中执行比较缓慢的一些操作，用LATENCY打印redis实例在跑命令时的耗时图表。只记录大于等于下边设置的值的操作。0的话，就是关闭监视。默认延迟监控功能是关闭的，如果你需要打开，也可以通过CONFIG SET命令动态设置。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># latency-monitor-threshold 0</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">############################# EVENT NOTIFICATION ##############################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#键空间通知使得客户端可以通过订阅频道或模式，来接收那些以某种方式改动了 Redis 数据集的事件。因为开启键空间通知功能需要消耗一些 CPU ，所以在默认配置下，该功能处于关闭状态。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#notify-keyspace-events 的参数可以是以下字符的任意组合，它指定了服务器该发送哪些类型的通知：</span></span>
+<span class="line"><span style="color:#c9d1d9;">##K 键空间通知，所有通知以 __keyspace@__ 为前缀</span></span>
+<span class="line"><span style="color:#c9d1d9;">##E 键事件通知，所有通知以 __keyevent@__ 为前缀</span></span>
+<span class="line"><span style="color:#c9d1d9;">##g DEL 、 EXPIRE 、 RENAME 等类型无关的通用命令的通知</span></span>
+<span class="line"><span style="color:#c9d1d9;">##$ 字符串命令的通知</span></span>
+<span class="line"><span style="color:#c9d1d9;">##l 列表命令的通知</span></span>
+<span class="line"><span style="color:#c9d1d9;">##s 集合命令的通知</span></span>
+<span class="line"><span style="color:#c9d1d9;">##h 哈希命令的通知</span></span>
+<span class="line"><span style="color:#c9d1d9;">##z 有序集合命令的通知</span></span>
+<span class="line"><span style="color:#c9d1d9;">##x 过期事件：每当有过期键被删除时发送</span></span>
+<span class="line"><span style="color:#c9d1d9;">##e 驱逐(evict)事件：每当有键因为 maxmemory 政策而被删除时发送</span></span>
+<span class="line"><span style="color:#c9d1d9;">##A 参数 g$lshzxe 的别名</span></span>
+<span class="line"><span style="color:#c9d1d9;">#输入的参数中至少要有一个 K 或者 E，否则的话，不管其余的参数是什么，都不会有任何 通知被分发。详细使用可以参考http://redis.io/topics/notifications</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;"># notify-keyspace-events &quot;&quot;</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">############################### ADVANCED CONFIG ###############################</span></span>
+<span class="line"><span style="color:#c9d1d9;">#数据量小于等于hash-max-ziplist-entries的用ziplist，大于hash-max-ziplist-entries用hash</span></span>
+<span class="line"><span style="color:#c9d1d9;"># hash-max-ziplist-entries 512</span></span>
+<span class="line"><span style="color:#c9d1d9;">#value大小小于等于hash-max-ziplist-value的用ziplist，大于hash-max-ziplist-value用hash。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># hash-max-ziplist-value 64</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#数据量小于等于list-max-ziplist-entries用ziplist，大于list-max-ziplist-entries用list。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># list-max-ziplist-entries 512</span></span>
+<span class="line"><span style="color:#c9d1d9;">#value大小小于等于list-max-ziplist-value的用ziplist，大于list-max-ziplist-value用list。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># list-max-ziplist-value 64</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#数据量小于等于set-max-intset-entries用iniset，大于set-max-intset-entries用set。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># set-max-intset-entries 512</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#数据量小于等于zset-max-ziplist-entries用ziplist，大于zset-max-ziplist-entries用zset。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># zset-max-ziplist-entries 128</span></span>
+<span class="line"><span style="color:#c9d1d9;">#value大小小于等于zset-max-ziplist-value用ziplist，大于zset-max-ziplist-value用zset。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># zset-max-ziplist-value 64</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#value大小小于等于hll-sparse-max-bytes使用稀疏数据结构（sparse），大于hll-sparse-max-bytes使用稠密的数据结构（dense）。一个比16000大的value是几乎没用的，建议的value大概为3000。如果对CPU要求不高，对空间要求较高的，建议设置到10000左右。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># hll-sparse-max-bytes 3000</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#Redis将在每100毫秒时使用1毫秒的CPU时间来对redis的hash表进行重新hash，可以降低内存的使用。当你的使用场景中，有非常严格的实时性需要，不能够接受Redis时不时的对请求有2毫秒的延迟的话，把这项配置为no。如果没有这么严格的实时性要求，可以设置为yes，以便能够尽可能快的释放内存。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># activerehashing yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">##对客户端输出缓冲进行限制可以强迫那些不从服务器读取数据的客户端断开连接，用来强制关闭传输缓慢的客户端。</span></span>
+<span class="line"><span style="color:#c9d1d9;">#对于normal client，第一个0表示取消hard limit，第二个0和第三个0表示取消soft limit，normal client默认取消限制，因为如果没有寻问，他们是不会接收数据的。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># client-output-buffer-limit normal 0 0 0</span></span>
+<span class="line"><span style="color:#c9d1d9;">#对于slave client和MONITER client，如果client-output-buffer一旦超过256mb，又或者超过64mb持续60秒，那么服务器就会立即断开客户端连接。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># client-output-buffer-limit slave 256mb 64mb 60</span></span>
+<span class="line"><span style="color:#c9d1d9;">#对于pubsub client，如果client-output-buffer一旦超过32mb，又或者超过8mb持续60秒，那么服务器就会立即断开客户端连接。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># client-output-buffer-limit pubsub 32mb 8mb 60</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#redis执行任务的频率为1s除以hz。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># hz 10</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;">#在aof重写的时候，如果打开了aof-rewrite-incremental-fsync开关，系统会每32MB执行一次fsync。这对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值。</span></span>
+<span class="line"><span style="color:#c9d1d9;"># aof-rewrite-incremental-fsync yes</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span></code></pre></div><h2 id="_04-redis-容器" tabindex="-1">04 redis 容器 <a class="header-anchor" href="#_04-redis-容器" aria-hidden="true">#</a></h2><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#C9D1D9;">docker run -d \</span></span>
+<span class="line"><span style="color:#C9D1D9;">--privileged=true \</span></span>
+<span class="line"><span style="color:#C9D1D9;">--restart=always \</span></span>
+<span class="line"><span style="color:#C9D1D9;">-p 6379:6379 \</span></span>
+<span class="line"><span style="color:#C9D1D9;">-v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf \</span></span>
+<span class="line"><span style="color:#C9D1D9;">-v /mydata/redis/data:/data \</span></span>
+<span class="line"><span style="color:#C9D1D9;">--name redis redis redis-server /etc/redis/redis.conf \</span></span>
+<span class="line"><span style="color:#C9D1D9;">--appendonly yes</span></span>
+<span class="line"></span></code></pre></div><div class="tip custom-block"><p class="custom-block-title">注</p><p>注意 : 命令中所有 冒号 前面的是主机配置 , 冒号 后面的是mysql容器配置 。 –restart unless-stopped : 在docker重启时重启当前容器。但不包含docker重启时已停止的容器。</p></div><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#8B949E;">#查看</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker ps</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#通过 Docker 命令进入 Redis 容器内部</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker </span><span style="color:#79C0FF;">exec</span><span style="color:#C9D1D9;"> -it redis /bin/bash</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker </span><span style="color:#79C0FF;">exec</span><span style="color:#C9D1D9;"> -it redis bash</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#进入 Redis 控制台</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-cli</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#添加一个变量为 key 为 name , value 为 bella 的内容</span></span>
+<span class="line"><span style="color:#FF7B72;">&gt;</span><span style="color:#C9D1D9;"> </span><span style="color:#79C0FF;">set</span><span style="color:#C9D1D9;"> name bella</span></span>
+<span class="line"><span style="color:#8B949E;">#查看 key 为 name 的 value 值</span></span>
+<span class="line"><span style="color:#FF7B72;">&gt;</span><span style="color:#C9D1D9;"> get name</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#或者也可以直接通过Docker Redis 命令进入Redis控制台 (上面两个命令的结合)</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker </span><span style="color:#79C0FF;">exec</span><span style="color:#C9D1D9;"> -it redis-test redis-cli</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">#退出</span></span>
+<span class="line"><span style="color:#79C0FF;">exit</span></span>
+<span class="line"></span></code></pre></div><ul><li><strong>redis 修改配置</strong></li></ul><div class="language-text"><span class="copy"></span><pre><code><span class="line"><span style="color:#c9d1d9;">命令	</span></span>
+<span class="line"><span style="color:#c9d1d9;">- appendonly yes	启动Redis持久化,默认 no , 所有信息都存储在内存 [重启丢失] 设置为 yes , 将存储在硬盘 [重启还在]</span></span>
+<span class="line"><span style="color:#c9d1d9;">- protected-mode no	关闭protected-mode模式，此时外部网络可以直接访问 (docker貌似自动开启了)</span></span>
+<span class="line"><span style="color:#c9d1d9;">- bind 0.0.0.0	设置所有IP都可以访问 (docker貌似自动开启了)</span></span>
+<span class="line"><span style="color:#c9d1d9;">- requirepass 密码	设置密码</span></span>
+<span class="line"><span style="color:#c9d1d9;"></span></span></code></pre></div><h3 id="_04-redis-控制台" tabindex="-1">04 redis 控制台 <a class="header-anchor" href="#_04-redis-控制台" aria-hidden="true">#</a></h3><p>如果你设置了密码,需要通过如下命令进入Redis控制台</p><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#8B949E;">## 进入Redis容器</span></span>
+<span class="line"><span style="color:#C9D1D9;">docker </span><span style="color:#79C0FF;">exec</span><span style="color:#C9D1D9;"> -it redis /bin/bash</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;">## 通过密码进入Redis控制台</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-cli -h 127.0.0.1 -p 6379 -a 123456</span></span>
+<span class="line"></span></code></pre></div><h2 id="_05-redis-yum" tabindex="-1">05 redis yum <a class="header-anchor" href="#_05-redis-yum" aria-hidden="true">#</a></h2><div class="language-shell"><span class="copy"></span><pre><code><span class="line"><span style="color:#8B949E;"># 安装命令		</span></span>
+<span class="line"><span style="color:#C9D1D9;">yum install -y redis </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 默认端口		</span></span>
+<span class="line"><span style="color:#C9D1D9;">6379</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 配置文件		</span></span>
+<span class="line"><span style="color:#C9D1D9;">vi /etc/redis.conf</span></span>
+<span class="line"><span style="color:#C9D1D9;">	</span></span>
+<span class="line"><span style="color:#8B949E;"># 去注释 		</span></span>
+<span class="line"><span style="color:#8B949E;">#bind 127.0.0.1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 重启服务	 </span></span>
+<span class="line"><span style="color:#C9D1D9;">systemctl restart redis </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 查看版本</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-server --version</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-server -v</span></span>
+<span class="line"><span style="color:#8B949E;">#查找redis 目录</span></span>
+<span class="line"><span style="color:#C9D1D9;">whereis redis-server</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#C9D1D9;">redis-server: /usr/bin/redis-server /usr/share/man/man1/redis-server.1.gz</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-cli shutdown</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-cli -a </span><span style="color:#FF7B72;">&lt;</span><span style="color:#C9D1D9;">你的密码</span><span style="color:#FF7B72;">&gt;</span><span style="color:#C9D1D9;"> shutdown</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 出现6379端口已被占用</span></span>
+<span class="line"><span style="color:#C9D1D9;">ps -ef </span><span style="color:#FF7B72;">|</span><span style="color:#C9D1D9;"> grep -i redis</span></span>
+<span class="line"><span style="color:#79C0FF;">kill</span><span style="color:#C9D1D9;"> -9 进程号</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># redis启动 </span></span>
+<span class="line"><span style="color:#C9D1D9;">命令：redis-server </span><span style="color:#FF7B72;">&amp;</span></span>
+<span class="line"><span style="color:#C9D1D9;">启动服务:     service redis start</span></span>
+<span class="line"><span style="color:#C9D1D9;">停止服务:     service redis stop</span></span>
+<span class="line"><span style="color:#C9D1D9;">重启服务:     service redis restart</span></span>
+<span class="line"><span style="color:#C9D1D9;">服务状态： 	 service redis status</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 客户端开启命令</span></span>
+<span class="line"><span style="color:#C9D1D9;">redis-cli</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8B949E;"># 客户端关闭命令</span></span>
+<span class="line"><span style="color:#79C0FF;">exit</span><span style="color:#C9D1D9;">  或  quit</span></span>
+<span class="line"></span></code></pre></div><h2 id="参考-1" tabindex="-1">参考 <a class="header-anchor" href="#参考-1" aria-hidden="true">#</a></h2><ul><li><p><a href="https://blog.csdn.net/qq_24958783/article/details/107541425" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/qq_24958783/article/details/107541425</a></p></li><li><p>redis.conf 文件 <a href="https://blog.csdn.net/qq_20156289/article/details/109465873" target="_blank" rel="noopener noreferrer">https://blog.csdn.net/qq_20156289/article/details/109465873</a></p></li></ul></div></div></main><footer class="VPDocFooter" data-v-3886f8ec data-v-4fc1a8f4><div class="edit-info" data-v-4fc1a8f4><div class="edit-link" data-v-4fc1a8f4><a class="VPLink link edit-link-button" href="https://github.com/space2030?tab=repositories" target="_blank" rel="noopener noreferrer" data-v-4fc1a8f4 data-v-8dd034e6><!--[--><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="edit-link-icon" data-v-4fc1a8f4><path d="M18,23H4c-1.7,0-3-1.3-3-3V6c0-1.7,1.3-3,3-3h7c0.6,0,1,0.4,1,1s-0.4,1-1,1H4C3.4,5,3,5.4,3,6v14c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1v-7c0-0.6,0.4-1,1-1s1,0.4,1,1v7C21,21.7,19.7,23,18,23z"></path><path d="M8,17c-0.3,0-0.5-0.1-0.7-0.3C7,16.5,6.9,16.1,7,15.8l1-4c0-0.2,0.1-0.3,0.3-0.5l9.5-9.5c1.2-1.2,3.2-1.2,4.4,0c1.2,1.2,1.2,3.2,0,4.4l-9.5,9.5c-0.1,0.1-0.3,0.2-0.5,0.3l-4,1C8.2,17,8.1,17,8,17zM9.9,12.5l-0.5,2.1l2.1-0.5l9.3-9.3c0.4-0.4,0.4-1.1,0-1.6c-0.4-0.4-1.2-0.4-1.6,0l0,0L9.9,12.5z M18.5,2.5L18.5,2.5L18.5,2.5z"></path></svg> 在 github 上编辑此页<!--]--><!----></a></div><div class="last-updated" data-v-4fc1a8f4><p class="VPLastUpdated" data-v-4fc1a8f4 data-v-537b088a>最后更新: <time datatime="2023-10-16T01:45:19.000Z" data-v-537b088a></time></p></div></div><!----></footer><!--[--><!--]--></div></div></div></div></div><footer class="VPFooter" data-v-581d5782 data-v-3d0cd5b8><div class="container" data-v-3d0cd5b8><p class="message" data-v-3d0cd5b8>Released under the MIT License.</p><p class="copyright" data-v-3d0cd5b8>Copyright © 2023-present Evan You</p></div></footer><!--[--><!--]--></div></div>
+    <script>__VP_HASH_MAP__ = JSON.parse("{\"index.md\":\"f37252e3\",\"src_case_example_aqs抽象队列同步器.md\":\"24756237\",\"src_case_example_arraylist扩容机制解析.md\":\"a4b8bed3\",\"src_case_example_arrays类sort()方法使用的排序算法.md\":\"ccfbb6ab\",\"src_case_example_concurrenthashmap为什么放弃了分段锁.md\":\"0a4ffee0\",\"src_case_example_es与mysql数据不一致.md\":\"d871661c\",\"src_case_example_redis与mysql数据不一致.md\":\"26418c82\",\"src_case_example_tomcat性能优化.md\":\"dfbb266f\",\"src_case_example_中间件设计.md\":\"468e8da7\",\"src_case_example_代码片段.md\":\"925caa6b\",\"src_case_example_分布式事务解决方案.md\":\"2f070cfb\",\"src_case_example_分布式唯一id.md\":\"23eadd1f\",\"src_case_example_分布式锁-基于数据库的实现.md\":\"4d8b29d2\",\"src_case_example_分库分表.md\":\"c52281c2\",\"src_case_example_如何处理千万级别mysql数据库锁表问题.md\":\"b4c0af50\",\"src_case_example_如何快速从千万级大表删除数据.md\":\"91fe5800\",\"src_case_example_批量处理数据.md\":\"78b0d9bb\",\"src_case_example_接口性能优化.md\":\"9d1792f7\",\"src_case_example_架构设计.md\":\"d307ccb7\",\"src_case_example_百万级别数据导入导出如何优化.md\":\"98a549ab\",\"src_case_example_百万级数据深度分页如何优化.md\":\"32c9674d\",\"src_case_example_秒杀.md\":\"fcad5d18\",\"src_case_example_系统设计规范.md\":\"15c311eb\",\"src_case_example_线上环境踩坑之并行流丢失数据.md\":\"1c3be8f9\",\"src_case_example_线程池.md\":\"e4225766\",\"src_case_example_综合面.md\":\"f493e2fa\",\"src_case_example_网络.md\":\"2753f5be\",\"src_case_example_设计接口.md\":\"38f526c0\",\"src_case_example_设计模式.md\":\"47a4706e\",\"src_case_example_重构.md\":\"f8b1bb82\",\"src_case_index.md\":\"e7293aa9\",\"src_case_norm_javascript规范.md\":\"9fb24129\",\"src_case_norm_java规范.md\":\"538dd69a\",\"src_case_norm_markdown规范.md\":\"2b32c5f2\",\"src_case_norm_vue规范.md\":\"898eb012\",\"src_case_norm_前后端规约.md\":\"e89a40a3\",\"src_case_norm_接口对接规范.md\":\"6d91f32f\",\"src_case_norm_日志规范.md\":\"f59ee845\",\"src_case_redis操作.md\":\"2f51e4c7\",\"src_deploy_index.md\":\"6cb4a725\",\"src_deploy_mongodb部署.md\":\"8a227b4a\",\"src_deploy_mysql部署.md\":\"11af5f81\",\"src_deploy_node部署.md\":\"fdf9e10a\",\"src_deploy_oracle部署.md\":\"f730433a\",\"src_deploy_redis部署.md\":\"ad57b569\",\"src_git_index.md\":\"1f809b9a\",\"src_index_index.md\":\"33da6e30\",\"src_kit_blog.md\":\"1c11ac7e\",\"src_kit_index.md\":\"04dd6794\",\"src_kit_nginx.md\":\"5c165844\",\"src_kit_tool.md\":\"d4ebdde9\",\"src_view_index.md\":\"dc64bfa6\",\"src_view_java_java-01-se.md\":\"d50e6d5e\",\"src_view_java_java-02-ee.md\":\"06cece6f\",\"src_view_java_java-03-tomcat.md\":\"4e071e95\",\"src_view_java_java-04-spring.md\":\"294e3736\",\"src_view_java_java-05-mybatis.md\":\"f08a45bf\",\"src_view_java_java-06-spring-boot.md\":\"0aff5c53\",\"src_view_java_java-07-maven.md\":\"cd8805f9\",\"src_view_java_java-08-spring-cloud.md\":\"9b8482f6\",\"src_view_java_java-09-mysql.md\":\"00f74996\",\"src_view_java_java-10-redis.md\":\"07f078ba\",\"src_view_java_java-11-oracle.md\":\"333de976\",\"src_view_java_java-12-gateway.md\":\"d8b6a793\",\"src_view_java_java-13-elasticsearch.md\":\"b01a920e\",\"src_view_java_java-14-mongodb.md\":\"a29b919f\",\"src_view_java_java-15-rocketmq.md\":\"2983da5e\",\"src_view_java_java-16-activemq.md\":\"d2aa5ffd\",\"src_view_java_java-17-rabbitmq.md\":\"ed854218\",\"src_view_java_java-18-zookeeper.md\":\"2bb8ca84\",\"src_view_java_java-19-kafka.md\":\"ef7bf4c5\",\"src_view_web_web-01-html.md\":\"f76a68db\",\"src_view_web_web-02-javascript.md\":\"560f2ce1\",\"src_view_web_web-03-vue.md\":\"e6cb6cc4\",\"src_web_index.md\":\"4759f761\",\"src_web_vitepress_vitepress快速开始.md\":\"86859a47\",\"src_web_vitepress_vitepress语法规则.md\":\"e4ba6974\",\"src_web_vitepress_vitepress项目发布.md\":\"246085db\"}")</script>
+    <script type="module" async src="/vitepress-deploy/assets/app.2a154df8.js"></script>
+    
+  </body>
+</html>
